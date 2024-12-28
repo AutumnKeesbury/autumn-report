@@ -1,4 +1,5 @@
 # Autumn's Report XeLaTeX Package
+## Version 1.0.0
 
 This package provides easier access to a couple personal tex setup files. 
 
