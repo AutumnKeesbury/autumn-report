@@ -1,0 +1,11 @@
+\begin{tikzpicture}[overlay, thick]
+%	\draw[draw=doc!60] (0,0) -- (0, 1) -- (1,1) -- (.5,.5) -- (1,0) -| cycle;
+	\node (bot-left) 	at (-9,-.25){};
+	\node (top-left) 	at (-9,1)	{};
+	\node (top-right) 	at (9,1)	{};
+	\node (mid) 		at (8,.375)	{};
+	\node (bot-right) 	at (9,-.25)	{};
+
+	\draw[draw=doc!60,fill=doc!60] (node cs:name=bot-left,anchor=south) -- (node cs:name=top-left,anchor=south) -- (node cs:name=top-right,anchor=south) -- (node cs:name=mid,anchor=south) -- (node cs:name=bot-right,anchor=south) -- (node cs:name=bot-left,anchor=south) -| cycle;
+
+\end{tikzpicture}
