@@ -22,7 +22,7 @@
 
 
 \RequirePackage[tmargin=0.5in,rmargin=1in,lmargin=1in,margin=1in,bmargin=0.75in,footskip=.2in]{geometry}
-\RequirePackage{fontspec}
+% \RequirePackage{fontspec}
 \RequirePackage{amsmath,amsfonts,amsthm,amssymb,mathtools}
 \RequirePackage[varbb]{newpxmath}
 \RequirePackage{xfrac}
@@ -53,10 +53,12 @@
 \RequirePackage{xifthen}
 \RequirePackage{pdfpages}
 %\RequirePackage{transparent}
-
 \pgfplotsset{
 	compat=1.18,
 }
+
+
+
 \usepgfplotslibrary{statistics,fillbetween}
 \usetikzlibrary{patterns,patterns.meta}
 
@@ -75,8 +77,9 @@
 %\RequirePackage{pdfpages}
 %\RequirePackage{transparent}
 
-\RequirePackage[notes,backend=biber,]{biblatex-chicago}
-\addbibresource{references.bib}
+
+
+% \RequirePackage[notes,backend=biber,]{biblatex-chicago}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % SELF MADE COLORS
@@ -807,22 +810,41 @@
 \titlecontents{chapter}[3.7pc]
 {\addvspace{30pt}%
 	\begin{tikzpicture}[remember picture, overlay]%
-		\draw[fill=doc!60,draw=doc!60] (-7,-.1) rectangle (-0.9,.5);%
-		\pgftext[left,x=-3.5cm,y=0.2cm]{\color{white}\Large\sc\bfseries Chapter\ \thecontentslabel}%
+		% \draw[help lines] (-6,-2) grid (-0.9,0.6); - Rule help, enable for gridlines around chapter number
+		\draw[fill=doc!60,draw=doc!60] (-3.5,-.1) rectangle (-1,.5);%
+		\pgftext[center,x=-2.25cm,y=0.2cm]{\color{white}\Large\sc\bfseries \ \thecontentslabel}% - This is the part that controls what the chapter number looks like, and sets preamble. For instance, replacing '\ \thecontentslabel' with 'Chapter\ \thecontentslabel' would make it say 'Chapter n' rather than just 'n'.
 	\end{tikzpicture}\color{doc!60}\large\sc\bfseries}%
 {}
 {}
 { \titlerule\ \large\sc\bfseries Page \thecontentspage
 	\begin{tikzpicture}[remember picture, overlay]
+		% \draw[help lines] (0,0) grid (3,2);
 		\draw[fill=doc!60,draw=doc!60] (2pt,0) rectangle (4,0.1pt);
 	\end{tikzpicture}}%
+
 \titlecontents{section}[3.7pc]
+{\addvspace{30pt}%
+	\begin{tikzpicture}[remember picture, overlay]%
+		% \draw[help lines] (-6,-2) grid (-0.9,0.6); - Rule help, enable for gridlines around chapter number
+		\draw[fill=doc!60,draw=doc!60] (-3.5,-.1) rectangle (-1,.5);%
+		\pgftext[center,x=-2.25cm,y=0.2cm]{\color{white}\Large\sc\bfseries \ \thecontentslabel}% - This is the part that controls what the chapter number looks like, and sets preamble. For instance, replacing '\ \thecontentslabel' with 'Chapter\ \thecontentslabel' would make it say 'Chapter n' rather than just 'n'.
+	\end{tikzpicture}\color{doc!60}\large\sc\bfseries}%
+{}
+{}
+{ \titlerule\ \large\sc\bfseries Page \thecontentspage
+	\begin{tikzpicture}[remember picture, overlay]
+		% \draw[help lines] (0,0) grid (3,2);
+		\draw[fill=doc!60,draw=doc!60] (2pt,0) rectangle (4,0.1pt);
+	\end{tikzpicture}}%
+
+\titlecontents{subsection}[3.7pc]
 {\addvspace{2pt}}
 {\contentslabel[\thecontentslabel]{2pc}}
 {}
 {\hfill\small \thecontentspage}
 []
-\titlecontents*{subsection}[3.7pc]
+
+\titlecontents*{paragraph}[3.7pc]
 {\addvspace{-1pt}\small}
 {}
 {}
@@ -831,7 +853,7 @@
 
 \makeatletter
 \renewcommand{\tableofcontents}{%
-	\chapter*{%
+\section*{%
 	  \vspace*{-20\p@}%
 	  \begin{tikzpicture}[remember picture, overlay]%
 		  \pgftext[right,x=15cm,y=0.2cm]{\color{doc!60}\Huge\sc\bfseries \contentsname}%
@@ -839,8 +861,43 @@
 		  \clip (13,-.75) rectangle (20,1);
 		  \pgftext[right,x=15cm,y=0.2cm]{\color{white}\Huge\sc\bfseries \contentsname}%
 	  \end{tikzpicture}}%
-	\@starttoc{toc}}
+	\@starttoc{toc}
+	\newpage}
 \makeatother
 
 \input{Settings/macros.tex}
 \input{Settings/letterfonts.tex}
+
+%% ==========================================
+%	HEADER CONFIGURATION
+%% ==========================================
+
+\RequirePackage{titlesec}
+
+\titleformat
+{\chapter} % command
+[block] % shape
+{\Large\bfseries\color{white!90!gray}} %format
+{\thechapter.} % label
+{0.5ex} % sep
+{	
+	\input{bookmark.tikz}
+	\thechapter.
+	\begin{raggedright}
+	\space
+} % before code
+[
+	\end{raggedright}
+]% after code
+
+%\titleformat{\section}[hang]
+%{\large\bfseries}
+%{\thesection.}{0.5em}{}
+%\titlespacing{\section}{12pc}{1.5ex plus .1ex minus .2ex}{1pc}
+
+\renewcommand{\thechapter}{C\arabic{chapter}}
+\renewcommand{\thesection}{\arabic{section}}
+
+%% ==========================================
+
+\usepackage{libertine}
