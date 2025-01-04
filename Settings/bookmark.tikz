@@ -1,4 +1,4 @@
-\begin{tikzpicture}[overlay, thick]
+\begin{tikzpicture}[remember picture, overlay]
 %	\draw[draw=doc!60] (0,0) -- (0, 1) -- (1,1) -- (.5,.5) -- (1,0) -| cycle;
 	\node (bot-left) 	at (-9,-.25){};
 	\node (top-left) 	at (-9,1)	{};
@@ -8,4 +8,5 @@
 
 	\draw[draw=doc!60,fill=doc!60] (node cs:name=bot-left,anchor=south) -- (node cs:name=top-left,anchor=south) -- (node cs:name=top-right,anchor=south) -- (node cs:name=mid,anchor=south) -- (node cs:name=bot-right,anchor=south) -- (node cs:name=bot-left,anchor=south) -| cycle;
 
+	\pgftext[base,x=-1.5cm] {\Large\bfseries\color{white!90!gray}{\thechapter.}}
 \end{tikzpicture}
