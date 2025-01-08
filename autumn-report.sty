@@ -899,10 +899,9 @@
 \newif\ifbibsty@chicago
 \newif\ifbibsty@apa
 
-\DeclareOption{bib=plain}{\bibsty@plaintrue\bibsty@chicagofalse\bibsty@apafalse}
-\DeclareOption{bib=chicago}{\bibsty@plainfalse\bibsty@chicagotrue\bibsty@apafalse}
-\DeclareOption{bib=apa}{\bibsty@plainfalse\bibsty@chicagofalse\bibsty@apatrue}
-\DeclareOption*{}
+\DeclareOption{plain}{\bibsty@plaintrue\bibsty@chicagofalse\bibsty@apafalse}
+\DeclareOption{chicago}{\bibsty@plainfalse\bibsty@chicagotrue\bibsty@apafalse}
+\DeclareOption{apa}{\bibsty@plainfalse\bibsty@chicagofalse\bibsty@apatrue}
 
 \ProcessOptions*
 
