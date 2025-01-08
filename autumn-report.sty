@@ -12,6 +12,59 @@
 
 % Process given options
 
+\RequirePackage{etoolbox}
+
+\newcommand\opt@select[1]{@#1@select}
+\newcommand\opt@ifpre[1]{@#1@}
+
+\newcommand\DeclareOptionList[3]{%
+    \@namedef{\opt@select{#1}}{#3}%-- default
+    \edef\opt@list{\zap@space#2 \@empty}%
+    \@for\opt@item:=\opt@list\do{%
+        \expandafter\newif\csname if\opt@ifpre{#1}\opt@item\endcsname
+        \edef\opt@temp{%
+            \noexpand\DeclareOption{\opt@item}%
+                {\def\expandafter\noexpand\csname\opt@select{#1}\endcsname{\opt@item}}}%
+        \opt@temp}}
+
+\newcommand\SetListOption[1]{%
+    \def\opt@set{\@nameuse{\opt@select{#1}}}%
+    \@nameuse{\opt@ifpre{#1}\opt@set true}}
+
+\newcommand\IfListOption[3]{%
+    \csname if\opt@ifpre{#1}#2\endcsname #3\fi}
+
+%____ Process options ___________________________________________
+
+\DeclareOptionList{bib}{chicago,apa,plain}{chicago}
+
+\ProcessOptions*\relax
+\AtEndOfPackage{\let\@unprocessedoptions\relax}
+
+\SetListOption{bib}%--- Activate layout option
+
+
+\IfListOption{bib}{chicago}{%
+	\RequirePackage[backend=biber,nty]{biblatex-chicago}
+	\let\oldprintbib\printbibliography
+	\newenvironment{mybib}{ }{ }
+	\renewcommand{\printbibliography}{\begin{mybib}\end{mybib}\oldprintbib}
+	\AfterEndEnvironment{mybib}{\stepcounter{chapter}}
+
+\IfListOption{bib}{apa}{%
+	\RequirePackage[style=apa,backend=biber]{biblatex}
+	\let\oldprintbib\printbibliography
+	\newenvironment{mybib}{ }{ }
+	\renewcommand{\printbibliography}{\begin{mybib}\end{mybib}\oldprintbib}
+	\AfterEndEnvironment{mybib}{\stepcounter{chapter}}
+
+\IfListOption{bib}{plain}{%
+	\RequirePackage[style=authoryear,backend=biber]{biblatex}
+	\let\oldprintbib\printbibliography
+	\newenvironment{mybib}{ }{ }
+	\renewcommand{\printbibliography}{\begin{mybib}\end{mybib}\oldprintbib}
+	\AfterEndEnvironment{mybib}{\stepcounter{chapter}}
+
 %----------------------------------------------------------------------------------------
 %	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
 %----------------------------------------------------------------------------------------
@@ -892,39 +945,5 @@
 
 %% ==========================================
 
-% bibliography stuff
-\RequirePackage{etoolbox}
-
-\newif\ifbibsty@plain
-\newif\ifbibsty@chicago
-\newif\ifbibsty@apa
-
-\DeclareOption{plain}{\bibsty@plaintrue\bibsty@chicagofalse\bibsty@apafalse}
-\DeclareOption{chicago}{\bibsty@plainfalse\bibsty@chicagotrue\bibsty@apafalse}
-\DeclareOption{apa}{\bibsty@plainfalse\bibsty@chicagofalse\bibsty@apatrue}
-
-\ProcessOptions*
-
-\ifbibsty@plain
-	\RequirePackage[style=authoryear,backend=biber]{biblatex}
-	\let\oldprintbib\printbibliography
-	\newenvironment{mybib}{ }{ }
-	\renewcommand{\printbibliography}{\begin{mybib}\end{mybib}\oldprintbib}
-	\AfterEndEnvironment{mybib}{\stepcounter{chapter}}
-\fi
-\ifbibsty@chicago
-	\RequirePackage[backend=biber,nty]{biblatex-chicago}
-	\let\oldprintbib\printbibliography
-	\newenvironment{mybib}{ }{ }
-	\renewcommand{\printbibliography}{\begin{mybib}\end{mybib}\oldprintbib}
-	\AfterEndEnvironment{mybib}{\stepcounter{chapter}}
-\fi
-\ifbibsty@apa
-	\RequirePackage[style=apa,backend=biber]{biblatex}
-	\let\oldprintbib\printbibliography
-	\newenvironment{mybib}{ }{ }
-	\renewcommand{\printbibliography}{\begin{mybib}\end{mybib}\oldprintbib}
-	\AfterEndEnvironment{mybib}{\stepcounter{chapter}}
-\fi
 
 \usepackage{libertine}
