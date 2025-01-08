@@ -12,8 +12,6 @@
 
 % Process given options
 
-\RequirePackage{etoolbox}
-
 \newcommand\opt@select[1]{@#1@select}
 \newcommand\opt@ifpre[1]{@#1@}
 
@@ -43,29 +41,24 @@
 
 \SetListOption{bib}%--- Activate layout option
 
-
-\IfListOption{bib}{chicago}{%
-	\RequirePackage[backend=biber,nty]{biblatex-chicago}
+\newcommand{\biboptions}[2]{
+	\RequirePackage[#1]{#2}
 	\let\oldprintbib\printbibliography
 	\newenvironment{mybib}{ }{ }
 	\renewcommand{\printbibliography}{\begin{mybib}\end{mybib}\oldprintbib}
 	\AfterEndEnvironment{mybib}{\stepcounter{chapter}}
+}
+
+\IfListOption{bib}{chicago}{%
+	\biboptions{backend=biber,nty}{biblatex-chicago}
 }
 
 \IfListOption{bib}{apa}{%
-	\RequirePackage[style=apa,backend=biber]{biblatex}
-	\let\oldprintbib\printbibliography
-	\newenvironment{mybib}{ }{ }
-	\renewcommand{\printbibliography}{\begin{mybib}\end{mybib}\oldprintbib}
-	\AfterEndEnvironment{mybib}{\stepcounter{chapter}}
+	\biboptions{style=apa,backend=biber}{biblatex}
 }
 
 \IfListOption{bib}{plain}{%
-	\RequirePackage[style=authoryear,backend=biber]{biblatex}
-	\let\oldprintbib\printbibliography
-	\newenvironment{mybib}{ }{ }
-	\renewcommand{\printbibliography}{\begin{mybib}\end{mybib}\oldprintbib}
-	\AfterEndEnvironment{mybib}{\stepcounter{chapter}}
+	\biboptions{style=authoryear,backend=biber}{biblatex}
 }
 
 %----------------------------------------------------------------------------------------
@@ -113,8 +106,6 @@
 	compat=1.18,
 }
 
-
-
 \usepgfplotslibrary{statistics,fillbetween}
 \usetikzlibrary{patterns,patterns.meta}
 
@@ -128,19 +119,9 @@
 \RequirePackage{tikzsymbols}
 \renewcommand\qedsymbol{$\Laughey$}
 
-%\RequirePackage{import}
-%\RequirePackage{xifthen}
-%\RequirePackage{pdfpages}
-%\RequirePackage{transparent}
-
-
-
-% \RequirePackage[notes,backend=biber,]{biblatex-chicago}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % SELF MADE COLORS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 
 
 \definecolor{myg}{RGB}{56, 140, 70}
