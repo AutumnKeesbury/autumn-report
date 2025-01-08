@@ -870,12 +870,18 @@
 {\thechapter.} % label
 {0.5ex} % sep
 {	
-	\label{chap. \thechapter}
 	\input{autumn-report/Settings/bookmark.tikz}
 	\space
 } % before code
 [
 ]% after code
+
+\titleformat
+{\chapter*}
+[hang]
+{\Large\bfseries}
+{0.5ex}
+{}[]
 
 %\titleformat{\section}[hang]
 %{\large\bfseries}
