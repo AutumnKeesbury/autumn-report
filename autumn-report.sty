@@ -34,11 +34,18 @@
 
 %____ Process options ___________________________________________
 
+% list declarations
 \DeclareOptionList{bib}{chicago,apa,plain}{chicago}
+
+% undefined option
+\DeclareOption*{
+	\PackageWarning{autumn-report}{Unknown option '\CurrentOption'}
+}
 
 \ProcessOptions*\relax
 \AtEndOfPackage{\let\@unprocessedoptions\relax}
 
+% bibliography config options
 \SetListOption{bib}%--- Activate layout option
 
 \newcommand{\biboptions}[2]{
@@ -61,6 +68,8 @@
 	\biboptions{style=authoryear,backend=biber}{biblatex}
 }
 
+% color config options
+
 %----------------------------------------------------------------------------------------
 %	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
 %----------------------------------------------------------------------------------------
@@ -68,7 +77,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % PACKAGE IMPORTS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 
 \RequirePackage[tmargin=0.5in,rmargin=1in,lmargin=1in,margin=1in,bmargin=0.75in,footskip=.2in]{geometry}
 % \RequirePackage{fontspec}
@@ -82,7 +90,7 @@
 \RequirePackage{hyperref,theoremref}
 \hypersetup{
 	pdftitle={Assignment},
-	colorlinks=true, linkcolor=doc!90,
+	colorlinks=true, linkcolor=blue,
 	bookmarksnumbered=true,
 	bookmarksopen=true
 }
