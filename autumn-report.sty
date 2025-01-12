@@ -35,7 +35,7 @@
 %____ Process options ___________________________________________
 
 % list declarations
-\DeclareOptionList{bib}{chicago,apa,plain}{chicago}
+\DeclareOptionList{bib}{chicago,apa,plain,nobib}{chicago}
 
 % undefined option
 \DeclareOption*{
@@ -57,7 +57,7 @@
 }
 
 \IfListOption{bib}{chicago}{%
-	\biboptions{backend=biber,nty}{biblatex-chicago}
+	\biboptions{backend=biber,notes}{biblatex-chicago}
 }
 
 \IfListOption{bib}{apa}{%
@@ -66,6 +66,10 @@
 
 \IfListOption{bib}{plain}{%
 	\biboptions{style=authoryear,backend=biber}{biblatex}
+}
+
+\IfListOption{bib}{nobib}{
+
 }
 
 % color config options
@@ -90,7 +94,7 @@
 \RequirePackage{hyperref,theoremref}
 \hypersetup{
 	pdftitle={Assignment},
-	colorlinks=true, linkcolor=dic!90,
+	colorlinks=true, linkcolor=doc!90,
 	bookmarksnumbered=true,
 	bookmarksopen=true,
 	urlcolor=blue,
@@ -121,7 +125,7 @@
 
 \newcommand\mycommfont[1]{\footnotesize\ttfamily\textcolor{blue}{#1}}
 \SetCommentSty{mycommfont}
-\newcommand{\incfig}[1]{%
+\providecommand{\incfig}[1]{%
     \def\svgwidth{\columnwidth}
     \import{./figures/}{#1.pdf_tex}
 }
@@ -662,7 +666,7 @@
 % SELF MADE COMMANDS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newcommand{\addstatistics}[2]{ %
+\providecommand{\addstatistics}[2]{ %
 % #1=table name
 % #2=first column name
 % Transpose the table, so we can work on rows instead of columns
@@ -702,42 +706,42 @@
 }
 
 \DeclareMathOperator{\di}{d\!}
-\newcommand*\Eval[3]{\left.#1\right\rvert_{#2}^{#3}}
+\providecommand*\Eval[3]{\left.#1\right\rvert_{#2}^{#3}}
 
-\newcommand{\thm}[2]{\begin{Theorem}{#1}{}#2\end{Theorem}}
-\newcommand{\cor}[2]{\begin{Corollary}{#1}{}#2\end{Corollary}}
-\newcommand{\mlenma}[2]{\begin{Lenma}{#1}{}#2\end{Lenma}}
-\newcommand{\mprop}[2]{\begin{Prop}{#1}{}#2\end{Prop}}
-\newcommand{\clm}[3]{\begin{claim}{#1}{#2}#3\end{claim}}
-\newcommand{\wc}[2]{\begin{wconc}{#1}{}\setlength{\parindent}{1cm}#2\end{wconc}}
-\newcommand{\thmcon}[1]{\begin{Theoremcon}{#1}\end{Theoremcon}}
-\newcommand{\ex}[2]{\begin{Example}{#1}{}#2\end{Example}}
-\newcommand{\exc}[2]{\begin{example}{#1}{}#2\end{example}}
-\newcommand{\dfn}[2]{\begin{Definition}[colbacktitle=red!75!black]{#1}{}#2\end{Definition}}
-\newcommand{\dfnc}[2]{\begin{definition}[colbacktitle=red!75!black]{#1}{}#2\end{definition}}
-\newcommand{\qs}[2]{\begin{question}{#1}{}#2\end{question}}
-\newcommand{\pf}[2]{\begin{myproof}[#1]#2\end{myproof}}
-\newcommand{\nt}[1]{\begin{note}#1\end{note}}
+\providecommand{\thm}[2]{\begin{Theorem}{#1}{}#2\end{Theorem}}
+\providecommand{\cor}[2]{\begin{Corollary}{#1}{}#2\end{Corollary}}
+\providecommand{\mlenma}[2]{\begin{Lenma}{#1}{}#2\end{Lenma}}
+\providecommand{\mprop}[2]{\begin{Prop}{#1}{}#2\end{Prop}}
+\providecommand{\clm}[3]{\begin{claim}{#1}{#2}#3\end{claim}}
+\providecommand{\wc}[2]{\begin{wconc}{#1}{}\setlength{\parindent}{1cm}#2\end{wconc}}
+\providecommand{\thmcon}[1]{\begin{Theoremcon}{#1}\end{Theoremcon}}
+\providecommand{\ex}[2]{\begin{Example}{#1}{}#2\end{Example}}
+\providecommand{\exc}[2]{\begin{example}{#1}{}#2\end{example}}
+\providecommand{\dfn}[2]{\begin{Definition}[colbacktitle=red!75!black]{#1}{}#2\end{Definition}}
+\providecommand{\dfnc}[2]{\begin{definition}[colbacktitle=red!75!black]{#1}{}#2\end{definition}}
+\providecommand{\qs}[2]{\begin{question}{#1}{}#2\end{question}}
+\providecommand{\pf}[2]{\begin{myproof}[#1]#2\end{myproof}}
+\providecommand{\nt}[1]{\begin{note}#1\end{note}}
 
-\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+\providecommand*\circled[1]{\tikz[baseline=(char.base)]{
 		\node[shape=circle,draw,inner sep=1pt] (char) {#1};}}
-\newcommand\getcurrentref[1]{%
+\providecommand\getcurrentref[1]{%
 	\ifnumequal{\value{#1}}{0}
 	{??}
 	{\the\value{#1}}%
 }
-\newcommand{\getCurrentSectionNumber}{\getcurrentref{section}}
+\providecommand{\getCurrentSectionNumber}{\getcurrentref{section}}
 \newenvironment{myproof}[1][\proofname]{%
 	\proof[\bfseries #1: ]%
 }{\endproof}
 
-\newcommand{\mclm}[2]{\begin{myclaim}[#1]#2\end{myclaim}}
+\providecommand{\mclm}[2]{\begin{myclaim}[#1]#2\end{myclaim}}
 \newenvironment{myclaim}[1][\claimname]{\proof[\bfseries #1: ]}{}
 
 \newcounter{mylabelcounter}
 
 \makeatletter
-\newcommand{\setword}[2]{%
+\providecommand{\setword}[2]{%
 	\phantomsection
 	#1\def\@currentlabel{\unexpanded{#1}}\label{#2}%
 }
@@ -763,8 +767,8 @@
 \DeclarePairedDelimiter{\round}{\lfloor}{\rceil}
 
 \newsavebox\diffdbox
-\newcommand{\slantedromand}{{\mathpalette\makesl{d}}}
-\newcommand{\makesl}[2]{%
+\providecommand{\slantedromand}{{\mathpalette\makesl{d}}}
+\providecommand{\makesl}[2]{%
 \begingroup
 \sbox{\diffdbox}{$\mathsurround=0pt#1\mathrm{#2}$}%
 \pdfsave
@@ -774,7 +778,7 @@
 \hskip\wd\diffdbox
 \endgroup
 }
-\newcommand{\dd}[1][]{\ensuremath{\mathop{}\!\ifstrempty{#1}{%
+\providecommand{\dd}[1][]{\ensuremath{\mathop{}\!\ifstrempty{#1}{%
 \slantedromand\@ifnextchar^{\hspace{0.2ex}}{\hspace{0.1ex}}}%
 {\slantedromand\hspace{0.2ex}^{#1}}}}
 \ProvideDocumentCommand\dv{o m g}{%
@@ -929,12 +933,12 @@
 %\titlespacing{\section}{12pc}{1.5ex plus .1ex minus .2ex}{1pc}
 
 \renewcommand{\thechapter}{C\arabic{chapter}}
-\renewcommand{\thesection}{\arabic{section}.}
+\renewcommand{\thesection}{\arabic{section}}
 
-\newcommand{\Alphsection}[1]{
-	\renewcommand{\thesection}{\Alph{section}.}
+\providecommand{\Alphsection}[1]{
+	\renewcommand{\thesection}{\Alph{section}}
 	  \section{#1}
-	\renewcommand{\thesection}{\arabic{section}.}
+	\renewcommand{\thesection}{\arabic{section}}
 }
 
 %% ==========================================
